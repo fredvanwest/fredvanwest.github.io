@@ -1,15 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Website</title>
-  </head>
-  <body>
-    <main>
-        <h1>Welcome to My Website</h1>  
-        <p>This is my new website which is hosted on GitHub Pages!</p>
-    </main>
-  </body>
+<html>
+<head>
+  <title>Test AR #1</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.7/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+    
+    <a-marker type="pattern" url="/AR/pattern-hiro.patt">
+      <a-plane id="leftSidePlane" position="0 0 0" rotation="-90 0 0" width="4" height="2.25" material="shader: flat; scale: 2 2 2; src:Left-Side.png"></a-plane>
+    </a-marker>
+    
+    <a-marker type="pattern" url="/AR/pattern-letterA.patt">
+      <a-plane id="rightSidePlane" position="0 0 0" rotation="-90 0 0" width="4" height="2.25" material="shader: flat; scale: 2 2 2; src:Right-Side.png"></a-plane>
+    </a-marker>
+    
+    <a-marker type="pattern" url="/AR/pattern-letterB.patt">
+      <a-plane id="NerdyPlane" position="0 0 0" rotation="-90 0 0" width="4" height="2.25" material="shader: flat; scale: 2 2 2; src:Merry-Christmas-You-Nerdy-Animals.png"></a-plane>
+    </a-marker>
+
+    <!-- Camera to view the scene -->
+    <a-entity camera></a-entity>
+  </a-scene>
+</body>
 </html>
