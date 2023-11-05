@@ -1,0 +1,133 @@
+<!--
+  For this design, we'll use three image triggers. The first image represents the left-side equation,
+  and the second will represent the right-side equation; the QR image will represent the Christmas 
+  Greeting. It's unclear whether the plane can represent a web-page, but a video can be displayed
+  so we'll use that. The Javascript allows the video to play and stop when the marker is found or lost.
+  The QR code serves double duty: It launches the application (this page) and when the app is running,
+  then the QR code will represent the image registration to play the video. Images are borderless which
+  will look much better on a mug.
+-->
+
+<!-- We may be able to remove some of these libraries -->
+<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1.3.0/dist/aframe-master.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+<!--script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.7/aframe/build/aframe-ar.js"></script-->
+<script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+
+<script>
+  window.onload = function () {
+    AFRAME.registerComponent("nerdyhandler", {
+      init: function () {
+        var marker = this.el;
+
+        this.nerdy = document.querySelector("#nerdy");
+
+        marker.addEventListener(
+          "markerFound",
+          function () {
+            this.nerdy.play();
+          }.bind(this)
+        );
+
+        marker.addEventListener(
+          "markerLost",
+          function () {
+            this.nerdy.pause();
+            this.nerdy.currentTime = 0;
+          }.bind(this)
+        );
+      },
+    });
+  };
+</script>
+
+<style>
+  .arjs-loader {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .arjs-loader div {
+    text-align: center;
+    font-size: 1.25em;
+    color: white;
+  }
+</style>
+
+<body style="margin: 0px; overflow: hidden">
+  <div class="arjs-loader">
+    <div>Loading Final Mug Design, please wait...</div>
+  </div>
+  <a-scene
+    vr-mode-ui="enabled: false;"
+    renderer="antialias: true; alpha: true; precision: medium;"
+    embedded
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+  >
+    <a-assets>
+      <video
+        src="https://raw.githack.com/fredvanwest/fredvanwest.github.io/master/Nerdy-Animals-3.mov"
+        preload="auto"
+        id="nerdy"
+        response-type="arraybuffer"
+        loop
+        crossorigin
+        webkit-playsinline
+        autoplay
+        muted
+        playsinline
+      ></video>
+    </a-assets>
+
+    <a-nft
+      nerdyhandler
+      type="nft"
+      url="https://raw.githack.com/fredvanwest/fredvanwest.github.io/master/glitch-target/Glitch-Target"
+      smooth="true"
+      smoothcount="10"
+      smoothtolerance="0.01"
+      smooththreshold="5"
+    >
+      <a-video
+        src="#nerdy"
+        position="50 150 -100"
+        rotation="-90 0 0"
+        width="300"
+        height="175"
+      >
+      </a-video>
+    </a-nft>
+    
+    <a-nft
+      type="nft"
+      url="https://raw.githack.com/fredvanwest/fredvanwest.github.io/master/left-side-graph/Left-Side-Equation-Borderless-Graph"
+      smooth="true"
+      smoothcount="10"
+      smoothtolerance="0.01"
+      smooththreshold="5"
+    >
+       <a-plane position="100 0.5 -180" rotation="-90 0 0" material="shader:flat;src:url(https://raw.githubusercontent.com/fredvanwest/fredvanwest.github.io/master/updated_left_side_solution.png)" scale="150 150 150"></a-plane>
+    </a-nft>
+    
+    <a-nft
+      type="nft"
+      url="https://raw.githack.com/fredvanwest/fredvanwest.github.io/master/right-side-graph/Right-Side-Equation-Borderless-Graph"
+      smooth="true"
+      smoothcount="10"
+      smoothtolerance="0.01"
+      smooththreshold="5"
+    >
+      <a-plane position="100 0.5 -180" rotation="-90 0 0" material="shader:flat;src:url(https://raw.githubusercontent.com/fredvanwest/fredvanwest.github.io/master/updated_right_side_solution.png)" scale="150 150 150"></a-plane>
+    </a-nft> 
+    
+    <a-entity camera></a-entity>
+  </a-scene>
+</body>
